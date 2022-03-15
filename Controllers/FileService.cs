@@ -35,6 +35,10 @@ namespace FileUpload.Data.Data
                 string fileFormat = GetFileFormat(file.FileName);
                 string filenamefinal = fileName + fileFormat;
                 byte[] bytesFile = ConvertFileInByteArray(file);
+                string base64 = Convert.ToBase64String(bytesFile);
+                Console.WriteLine("base64:# " + base64 + " #");
+                byte[] bytesFile2 = Convert.FromBase64String(base64);
+
 
                 string directory = CreateFilePath(filenamefinal);
                 await System.IO.File.WriteAllBytesAsync(directory, bytesFile);
