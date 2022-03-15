@@ -32,14 +32,14 @@ namespace FileUpload.Data.Data
             foreach (var file in files)
             {
                 string fileName = GenerateNewFileName(file.FileName);
-                string fileFormat = GetFileFormat(fileName);
-
+                string fileFormat = GetFileFormat(file.FileName);
+                string filenamefinal = fileName + fileFormat;
                 byte[] bytesFile = ConvertFileInByteArray(file);
 
-                string directory = CreateFilePath(fileName);
+                string directory = CreateFilePath(filenamefinal);
                 await System.IO.File.WriteAllBytesAsync(directory, bytesFile);
 
-                var url = GetFileUrl(fileName);
+                var url = GetFileUrl(filenamefinal);
                 _files.Add(new File(
                     url,
                     fileFormat));
@@ -55,7 +55,7 @@ namespace FileUpload.Data.Data
         private string GenerateNewFileName(string fileName)
         {
 
-            var newFileName = (Guid.NewGuid().ToString() + "_" + fileName).ToLower();
+            var newFileName = (Guid.NewGuid().ToString()).ToLower();
             newFileName = newFileName.Replace("-", "");
 
             return newFileName;
